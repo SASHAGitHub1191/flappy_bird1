@@ -34,12 +34,15 @@ class Bird(Sprite):
             self.speed = self.speed + 0.1
         keys = key.get_pressed()
         if keys[K_SPACE]:
+            self.image = transform.scale(image.load('bird-50.png'), (self.width, self.height))
             self.speed =  - 4
-            self.rotate(50-self.angle)
+
             self.angle  = 50
         if self.angle >= -50:
             self.angle = self.angle - 1
-            self.rotate(-1)
+
+            if self.angle == -50:
+                self.image = transform.scale(image.load('bird50.png'), (self.width, self.height))
             if self.angle == 0:
                 self.image = transform.scale(image.load(self.picture), (self.width, self.height))
         
@@ -47,7 +50,7 @@ class Bird(Sprite):
     def rotate(self, angle):
         self.image = transform.rotate(self.image, angle)
         self.rect = self.image.get_rect(center=self.rect.center)
-        
+
 
     
 
@@ -59,7 +62,7 @@ class Tube(Sprite):
         self.rect.x = self.rect.x - self.speed
         if self.rect.x < -100:
             tubes.remove(self)
-invulnerability_coin = Tube('bird2.1.png', 500, 50, 100, 100, 2)
+invulnerability_coin = Tube('pngwing.com.png', 500, 50, 100, 100, 2)
 
 
 
@@ -93,8 +96,9 @@ def restart():
     n = True
 lose = False
 point = points+5
+fon_token = transform.scale(image.load('timerfont.png'),(300, 350))
 while run:
-    
+
 
     for e in event.get():
         if e.type == QUIT:
@@ -112,8 +116,9 @@ while run:
         tubes.add(Tube('труба.jpg',1500, -550 + a, 100 , 800, 2)),
         tubes.add(Tube('труба2.jpg',1500, 550 + a, 100 ,800, 2))#TODO
 
-    images = font.SysFont('verdana', 100 ).render( str(points), True, (121, 127, 140))
+    images = font.SysFont('impact', 100 ).render( str(points), True, (0, 30, 60))
     window.blit(background, (0, 0))
+    window.blit(fon_token,(-50,-110))
     tubes.draw(window)
     tubes.update()
 
